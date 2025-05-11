@@ -1,24 +1,24 @@
 import {Router} from 'express';
-import { crearPost, obtenerPosts, obtenerPostPorId,AnadirComentario, filtrarPosts,EliminarPost } from '../Publicacion/publicacion.controller.js';
-import { crearPostValidator, filtrarPostsValidator, anadirComenterioValidator } from "../middlewares/publicacion-validator.js";
+import { crearPublicacion, obtenerPublicaciones, obtenerPublicacionPorId,anadirComentario, filtrarPublicaciones,eliminarPublicacion } from '../Publicacion/publicacion.controller.js';
+import { validarCrearPublicacion, validarFiltrarPublicaciones, validarAnadirComentario } from "../middlewares/publicacion-validator.js";
 
 const router = Router();
 
-router.post('/', crearPostValidator, crearPost);
+router.post('/', validarCrearPublicacion, crearPublicacion);
 
 
-router.get('/', obtenerPosts);
+router.get('/', obtenerPublicaciones);
 
 
-router.get('/filter', filtrarPostsValidator, filtrarPosts);
+router.get('/filter', validarFiltrarPublicaciones, filtrarPublicaciones);
 
 
-router.get('/:id', obtenerPostPorId);
+router.get('/:id', obtenerPublicacionPorId);
 
-router.delete('/:id', EliminarPost);
+router.delete('/:id', eliminarPublicacion);
 
 
-router.patch('/:id', anadirComenterioValidator, AnadirComentario);
+router.patch('/:id', validarAnadirComentario, anadirComentario);
 
 
 export default router;

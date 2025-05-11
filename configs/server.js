@@ -43,3 +43,6 @@ export const initServer = () =>{
         console.log(`server inti failed ${err}`)
     }
 }
+
+
+export default initServer;

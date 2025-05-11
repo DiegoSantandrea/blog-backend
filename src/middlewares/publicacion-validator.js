@@ -2,30 +2,29 @@ import { body, param } from "express-validator";
 import { validateFields } from "../middlewares/validate-fields.js";
 import { handleErrors } from "../middlewares/handle-error.js";
 
-export const validCourse = [
+export const cursosValidos = [
   'Technology',
   'Workshop',
   'Supervised Practice'
 ];
 
-
-export const crearPostValidator = [
+export const validarCrearPublicacion = [
   body("title")
     .notEmpty()
-    .withMessage("Title is required")
+    .withMessage("El título es obligatorio")
     .isLength({ min: 3 })
-    .withMessage("Title must be at least 3 characters long"),
+    .withMessage("El título debe tener al menos 3 caracteres"),
   body("content")
     .notEmpty()
-    .withMessage("Content is required")
+    .withMessage("El contenido es obligatorio")
     .isLength({ min: 10 })
-    .withMessage("Content must be at least 10 characters long"),
+    .withMessage("El contenido debe tener al menos 10 caracteres"),
   body("course")
     .notEmpty()
-    .withMessage("Course is required")
+    .withMessage("El curso es obligatorio")
     .custom((value) => {
-      if (!validCourse.includes(value)) {
-        throw new Error(`Course must be one of the following: ${validCourse.join(", ")}`);
+      if (!cursosValidos.includes(value)) {
+        throw new Error(`El curso debe ser uno de los siguientes: ${cursosValidos.join(", ")}`);
       }
       return true;
     }),
@@ -33,41 +32,39 @@ export const crearPostValidator = [
   handleErrors
 ];
 
-
-export const filtrarPostsValidator = [
+export const validarFiltrarPublicaciones = [
   param("course")
     .optional()
     .isIn(["Technology", "Workshop", "Supervised Practice"])
     .custom((value) => {
-      if (!validCourse.includes(value)) {
-        throw new Error(`Course must be one of the following: ${validCourse.join(", ")}`);
+      if (!cursosValidos.includes(value)) {
+        throw new Error(`El curso debe ser uno de los siguientes: ${cursosValidos.join(", ")}`);
       }
       return true;
     }),
   param("title")
     .optional()
     .isString()
-    .withMessage("Title must be a string"),
+    .withMessage("El título debe ser una cadena de texto"),
   param("sortByDate")
     .optional()
     .isIn(["asc", "desc"])
-    .withMessage("Invalid sort option (asc or desc)"),
+    .withMessage("Opción de ordenamiento inválida (asc o desc)"),
   validateFields,
   handleErrors
 ];
 
-
-export const anadirComenterioValidator = [
+export const validarAnadirComentario = [
   body("username")
     .notEmpty()
-    .withMessage("Username is required")
+    .withMessage("El nombre de usuario es obligatorio")
     .isLength({ min: 3 })
-    .withMessage("Username must be at least 3 characters long"),
+    .withMessage("El nombre de usuario debe tener al menos 3 caracteres"),
   body("text")
     .notEmpty()
-    .withMessage("Text is required")
+    .withMessage("El texto es obligatorio")
     .isLength({ min: 1 })
-    .withMessage("Text must be at least 1 character long"),
+    .withMessage("El texto debe tener al menos 1 carácter"),
   validateFields,
   handleErrors
 ];
